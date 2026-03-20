@@ -1,118 +1,535 @@
+BODY:
+
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
   <meta charset="UTF-8">
+
   <title>Hydra Sublenguaje</title>
+
   <script src="https://unpkg.com/hydra-synth"></script>
+
   <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      height: 100%;
-      background: black;
-    }
 
-    canvas {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 0;
-    }
+        html, body {
 
-    #input {
-      position: fixed;
-      bottom: 20px;
-      left: 50%;
-      transform: translateX(-50%);
-      width: 80%;
-      max-width: 600px;
-      height: 80px;
-      background: rgba(0, 0, 0, 0.5);
-      color: white;
-      font-size: 18px;
-      border: 2px solid white;
-      border-radius: 10px;
-      padding: 10px;
-      z-index: 10;
-      backdrop-filter: blur(4px);
-      resize: none;
-    }
+          margin: 0;
+
+          padding: 0;
+
+          overflow: hidden;
+
+          height: 100%;
+
+          background: black;
+
+        }
+
+
+        canvas {
+
+          position: fixed;
+
+          top: 0;
+
+          left: 0;
+
+          width: 100vw;
+
+          height: 100vh;
+
+          z-index: 0;
+
+        }
+
+
+        #input {
+
+          position: fixed;
+
+          bottom: 20px;
+
+          left: 50%;
+
+          transform: translateX(-50%);
+
+          width: 80%;
+
+          max-width: 600px;
+
+          height: 80px;
+
+          background: rgba(0, 0, 0, 0.5);
+
+          color: white;
+
+          font-size: 18px;
+
+          border: 2px solid white;
+
+          border-radius: 10px;
+
+          padding: 10px;
+
+          z-index: 10;
+
+          backdrop-filter: blur(4px);
+
+          resize: none;
+
+        }
+
+
+        /* Botón de palabras - estilo sobrio */
+
+        #wordButton {
+
+          position: fixed;
+
+          top: 20px;
+
+          right: 20px;
+
+          background: rgba(0, 0, 0, 0.6);
+
+          color: rgba(255, 255, 255, 0.7);
+
+          border: 1px solid rgba(255, 255, 255, 0.3);
+
+          border-radius: 4px;
+
+          padding: 6px 12px;
+
+          font-size: 12px;
+
+          cursor: pointer;
+
+          z-index: 20;
+
+          backdrop-filter: blur(4px);
+
+          transition: all 0.2s ease;
+
+          font-family: monospace;
+
+          letter-spacing: 0.5px;
+
+        }
+
+
+        #wordButton:hover {
+
+          background: rgba(0, 0, 0, 0.8);
+
+          color: white;
+
+          border-color: rgba(255, 255, 255, 0.6);
+
+        }
+
+
+        /* Panel desplegable - estilo sobrio */
+
+        #wordPanel {
+
+          position: fixed;
+
+          top: 60px;
+
+          right: 20px;
+
+          background: rgba(0, 0, 0, 0.85);
+
+          backdrop-filter: blur(8px);
+
+          border: 1px solid rgba(255, 255, 255, 0.2);
+
+          border-radius: 4px;
+
+          padding: 12px;
+
+          z-index: 20;
+
+          min-width: 200px;
+
+          max-width: 280px;
+
+          max-height: 70vh;
+
+          overflow-y: auto;
+
+          display: none;
+
+          font-family: monospace;
+
+          color: #ccc;
+
+          font-size: 12px;
+
+        }
+
+
+        #wordPanel.show {
+
+          display: block;
+
+        }
+
+
+        #wordPanel h3 {
+
+          margin: 0 0 10px 0;
+
+          text-align: left;
+
+          color: #aaa;
+
+          font-size: 11px;
+
+          font-weight: normal;
+
+          letter-spacing: 1px;
+
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+
+          padding-bottom: 5px;
+
+        }
+
+
+        .word-list {
+
+          display: flex;
+
+          flex-direction: column;
+
+          gap: 4px;
+
+        }
+
+
+        .word-item {
+
+          padding: 4px 0;
+
+          color: #aaa;
+
+          font-size: 11px;
+
+          border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+
+        }
+
+
+        .word-name {
+
+          color: #ddd;
+
+          font-weight: normal;
+
+        }
+
+
+        .close-panel {
+
+          position: absolute;
+
+          top: 8px;
+
+          right: 10px;
+
+          cursor: pointer;
+
+          font-size: 14px;
+
+          color: #888;
+
+          background: none;
+
+          border: none;
+
+          font-weight: normal;
+
+          padding: 0;
+
+          line-height: 1;
+
+        }
+
+
+        .close-panel:hover {
+
+          color: #fff;
+
+        }
+
+
+        /* Scrollbar sobria */
+
+        #wordPanel::-webkit-scrollbar {
+
+          width: 4px;
+
+        }
+
+
+        #wordPanel::-webkit-scrollbar-track {
+
+          background: rgba(255, 255, 255, 0.05);
+
+        }
+
+
+        #wordPanel::-webkit-scrollbar-thumb {
+
+          background: rgba(255, 255, 255, 0.2);
+
+        }
+
+
+        #wordPanel::-webkit-scrollbar-thumb:hover {
+
+          background: rgba(255, 255, 255, 0.3);
+
+        }
+
   </style>
+
 </head>
+
 <body>
-  <textarea id="input" placeholder="intervención, discurso, tejido, contacto, adaptación, confusión, estándar, sustancia"  ></textarea>
+
+  <button id="wordButton">palabras</button>
+
+ 
+
+  <div id="wordPanel">
+
+        <button class="close-panel" id="closePanel">✕</button>
+
+        <h3>PALABRAS DISPONIBLES</h3>
+
+        <div class="word-list" id="wordList"></div>
+
+  </div>
+
+
+  <textarea id="input" placeholder="Escribe palabras: paco, mestizo, a, b, c..."></textarea>
+
 
   <script>
-    const hydra = new Hydra({ detectAudio: false });
 
-    const palabras = {
-intervención: () => voronoi(.5).saturate(1.01).scale(.7).color(2.5,2,7).hue(.02).modulateHue(src(o1).hue(.7).posterize(-3).contrast(.5),2).layer(src(o1).mult(gradient(1).saturate(.7))),
+        const hydra = new Hydra({ detectAudio: false });
+
+
+        const palabras = {
+
+
+          intervención: () => voronoi(.5).saturate(1.01).scale(.7).color(2.5,2,7).hue(.02).modulateHue(src(o1).hue(.7).posterize(-3).contrast(.5),2).layer(src(o1).mult(gradient(1).saturate(.7))),
+
 discurso: () => osc(200, 0).kaleid(200).scale(1, 0.4).scrollX(0.1, 0.01).color(2,3,4),
+
 tejido: () => osc(10,-0.0018,0.17).diff(osc(10,0.00008).rotate(Math.PI/0.0003)).modulateScale(noise(1.5,0.18).modulateScale(osc(13).rotate(()=>Math.sin(time/22))),3).color(26,0.5,0.4, 0.9, 0.2, 0.011, 5, 22,  15,1).contrast(1.4).add(src(o0).modulate(o0,4)).invert().brightness(0.3, 2).contrast( 0.5, 2, 0.1, 2).color(4, 2, 0.1).modulateScale(osc(4),0.2).posterize(20).rotate(1, 0.2, 0.01, 0.001).color(22, 14, 13, 3, 7,  4, 0.2, 8).contrast(0.18, 0.3, 0.1, 0.2, 0.03, 1).brightness(0.0001, -1, 10),
+
 contacto: () => osc(0.5,1.25).mult(shape(0.07,0.09).rotate(1.5)).diff(gradient()).add(shape(2,2).bend(gradient(2))).modulate(noise().scrolly(0.08,0.05)).color(3,0.5,0.75),
+
 adaptación: () => osc(1,1).mult(voronoi(10000,3).blend(o0).luma()).colorama(13,4,6).add(shape(45,0.125).rotate(4,1).mult(voronoi(1000,5).luma()).rotate(1.5)).scrollX([0.1,0.625,0.5,0.00001],0).scrollY([7,-0.7,0.005,0.0001],0),
+
 confusión: () => shape(5,0.2,0.3).color(0.5,4,20).scale(Math.sin(time)+1*2).repeat(Math.sin(time)*5).scale(Math.sin(time)+1*1.5).modulate(noise(2,2)).rotate(1,0.2).invert(4),
+
 estándar: () => osc(5, 0.01, 0.1).mult(osc(4, 2.7).modulate(osc(7).rotate(4,8), 32)).color(7,3,15).saturate(2.4).luma(13,9, (6, ()=> 1 + a.fft[7])).scale(0.7, ()=> 2.7 + a.fft[2]).diff(),
+
 sustancia: () => osc(20, 0.01, 1.1).kaleid(40).color(38,9.1,3.9).rotate(0, 0.1).modulate(o0, () => mouse.x * 0.0003).scale(1.01),
 
+         
+          magt: () => {
+
+            osc(40,0.5,() => a.fft[0]*200).out(o2)
+
+            let shape = osc(60, 0.1, 2)
+
+              .mult(noise(1, 4))
+
+              .rotate(() => (Math.random() - 0.5) * 0.5 + Math.sin(time * 0.2) * 0.2)
+
+            shape.out(o0)
+
+            return shape
+
+          },
+
+        };
 
 
+        const input = document.getElementById("input");
 
-magt : () => {
-  osc(40,0.5,() => a.fft[0]*200).out(o2)
-  let shape = osc(60, 0.1, 2)
-    .mult(noise(1, 4))
-    .rotate(() => (Math.random() - 0.5) * 0.5 + Math.sin(time * 0.2) * 0.2)
-  shape.out(o0)
-  return shape
-},
-};
 
-    const input = document.getElementById("input");
+        input.addEventListener("input", () => {
 
-    input.addEventListener("input", () => {
-      const texto = input.value.toLowerCase().trim();
+          const texto = input.value.toLowerCase().trim();
 
-      // Si contiene comas: modulación encadenada
-      if (texto.includes(",")) {
-        const modWords = texto.split(",").map(w => w.trim()).filter(w => palabras[w]);
-        if (modWords.length >= 2) {
-          let base = palabras[modWords[0]]();
-          for (let i = 1; i < modWords.length; i++) {
-            base = palabras[modWords[i]]().modulate(base, 0.5 + 0.3 * Math.random()); // modulación aleatoria
+
+          // Si contiene comas: modulación encadenada
+
+          if (texto.includes(",")) {
+
+            const modWords = texto.split(",").map(w => w.trim()).filter(w => palabras[w]);
+
+            if (modWords.length >= 2) {
+
+              let base = palabras[modWords[0]]();
+
+              for (let i = 1; i < modWords.length; i++) {
+
+                base = palabras[modWords[i]]().modulate(base, 0.5 + 0.3 * Math.random());
+
+              }
+
+              base.out();
+
+              return;
+
+            }
+
           }
-          base.out();
-          return;
-        }
-      }
 
-      // Si contiene comas: modulación encadenada
-      if (texto.includes("x")) {
-        const modWords = texto.split(",").map(w => w.trim()).filter(w => palabras[w]);
-        if (modWords.length >= 2) {
-          let base = palabras[modWords[0]]();
-          for (let i = 1; i < modWords.length; i++) {
-            base = palabras[modWords[i]]().modulateScale(base, 0.5 + 0.3 * Math.random()); // modulación aleatoria
+
+          // Si contiene x: modulación escala
+
+          if (texto.includes("x")) {
+
+            const modWords = texto.split("x").map(w => w.trim()).filter(w => palabras[w]);
+
+            if (modWords.length >= 2) {
+
+              let base = palabras[modWords[0]]();
+
+              for (let i = 1; i < modWords.length; i++) {
+
+                base = palabras[modWords[i]]().modulateScale(base, 0.5 + 0.3 * Math.random());
+
+              }
+
+              base.out();
+
+              return;
+
+            }
+
           }
-          base.out();
-          return;
-        }
-      }
 
-      // Si no hay coma, renderiza todo en capas independientes
-      const entradas = texto.split(/\s+/).map(w => w.trim()).filter(w => palabras[w]);
-      if (entradas.length > 0) {
-        // Componer blend entre todas
-        let comp = palabras[entradas[0]]();
-        for (let i = 1; i < entradas.length; i++) {
-          comp = comp.diff(palabras[entradas[i]](), 0.5);
-        }
-        comp.out();
-      }
-    });
+
+          // Si no hay separadores especiales, renderiza todo en capas independientes
+
+          const entradas = texto.split(/\s+/).map(w => w.trim()).filter(w => palabras[w]);
+
+          if (entradas.length > 0) {
+
+            let comp = palabras[entradas[0]]();
+
+            for (let i = 1; i < entradas.length; i++) {
+
+              comp = comp.diff(palabras[entradas[i]](), 0.5);
+
+            }
+
+            comp.out();
+
+          }
+
+        });
+
+
+        // Funcionalidad del botón de palabras - solo visualización
+
+        const wordButton = document.getElementById("wordButton");
+
+        const wordPanel = document.getElementById("wordPanel");
+
+        const closePanel = document.getElementById("closePanel");
+
+        const wordList = document.getElementById("wordList");
+
+
+        // Generar lista de palabras (solo texto, sin interacción)
+
+        const palabrasKeys = Object.keys(palabras).sort();
+
+   
+
+        palabrasKeys.forEach(palabra => {
+
+          const wordItem = document.createElement("div");
+
+          wordItem.className = "word-item";
+
+         
+
+          const wordName = document.createElement("span");
+
+          wordName.className = "word-name";
+
+          wordName.textContent = palabra;
+
+         
+
+          wordItem.appendChild(wordName);
+
+          wordList.appendChild(wordItem);
+
+        });
+
+
+        // Mostrar/Ocultar panel - se mantiene activo hasta hacer click
+
+        wordButton.addEventListener("click", (e) => {
+
+          e.stopPropagation();
+
+          wordPanel.classList.toggle("show");
+
+        });
+
+
+        closePanel.addEventListener("click", (e) => {
+
+          e.stopPropagation();
+
+          wordPanel.classList.remove("show");
+
+        });
+
+
+        // Cerrar solo si se hace click fuera del panel Y fuera del botón
+
+        document.addEventListener("click", (event) => {
+
+          if (wordPanel.classList.contains("show") &&
+
+              !wordPanel.contains(event.target) &&
+
+              !wordButton.contains(event.target)) {
+
+            wordPanel.classList.remove("show");
+
+          }
+
+        });
+
+
+        // Evitar que el panel se cierre al hacer click dentro de él
+
+        wordPanel.addEventListener("click", (e) => {
+
+          e.stopPropagation();
+
+        });
+
   </script>
+
 </body>
+
 </html>
