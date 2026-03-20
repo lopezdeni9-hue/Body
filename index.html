@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Línea del Tiempo</title>
+<style>
+  body {
+    font-family: Arial, sans-serif;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background: #f0f0f0;
+  }
+
+  /* ---- Contenedor externo para scroll ---- */
+  .timeline-wrapper {
+    overflow-x: auto;  /* scroll horizontal */
+    max-width: 90vw;
+    padding: 20px;
+  }
+
+  /* Estilo del scroll */
+  .timeline-wrapper::-webkit-scrollbar {
+    height: 8px;
+  }
+  .timeline-wrapper::-webkit-scrollbar-thumb {
+    background: #aaa;
+    border-radius: 4px;
+  }
+  .timeline-wrapper::-webkit-scrollbar-track {
+    background: #f0f0f0;
+  }
+
+  /* ---- Línea del tiempo ---- */
+  .timeline {
+    display: flex;
+    gap: 60px;  /* distancia entre números */
+    position: relative;
+  }
+
+  .item {
+    position: relative;
+    cursor: pointer;
+    font-size: 22px;
+    font-weight: bold;
+    color: #333;
+    text-align: center;
+    flex-shrink: 0;       /* no se compriman los items */
+    padding-top: 250px;   /* espacio arriba para la imagen flotante */
+  }
+
+  /* Nombre debajo de la fecha */
+  .item .name {
+    font-size: 16px;
+    color: #555;
+    margin-top: 45px; /* separación debajo de la fecha */
+    opacity: 0;
+    transition: 0.3s;
+  }
+
+  /* Imagen flotante arriba */
+  .preview {
+    position: absolute;
+    bottom: 120px; /* separación de la imagen */
+    left: 50%;
+    transform: translateX(-50%);
+    opacity: 0;
+    pointer-events: none;
+    transition: 0.3s;
+    text-align: center;
+  }
+
+  .preview img {
+    width: 180px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+  }
+
+  /* Mostrar imagen y nombre al hacer hover */
+  .item:hover .preview {
+    opacity: 1;
+    bottom: 140px;
+  }
+
+  .item:hover .name {
+    opacity: 1;
+  }
+</style>
+</head>
+<body>
+
+
+
+
+<div class="timeline-wrapper">
+  <div class="timeline">
+    <div class="item">
+      4:44
+      <div class="name">Call Me Little Sunshine</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b2730d532f2d308ee9f58e0ad404">
+      </div>
+    </div>
+
+    <div class="item">
+      2:46
+      <div class="name">DASH</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b27381d97a31253b898bc4149195">
+      </div>
+    </div>
+
+    <div class="item">
+      3:29
+      <div class="name">Training Season</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b273f5a775e66774883c06aabc70">
+      </div>
+    </div>
+
+    <div class="item">
+      4:41
+      <div class="name">Video Games</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b273ebc8cfac8b586bc475b04918">
+      </div>
+    </div>
+
+    <div class="item">
+      2:28
+      <div class="name">SUPERMODEL</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d00001e025bcb1af9a2ccf3474473ed35">
+      </div>
+    </div>
+
+    <div class="item">
+      3:15
+      <div class="name">Im a Mess</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b27361fe6d3a50c0beaa3cfe33e9">
+      </div>
+    </div>
+
+    <div class="item">
+      3:11
+      <div class="name">Kill This Love</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0">
+      </div>
+    </div>
+
+    <div class="item">
+      3:06
+      <div class="name">MAMMAMIA</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b273553235260b499fc2df6e4ede">
+      </div>
+    </div>
+
+    <div class="item">
+      3:25
+      <div class="name">IDIOTA</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b273ae9b161eee4e8f69c03d6fab">
+      </div>
+    </div>
+
+    <div class="item">
+      4:05
+      <div class="name">Nervous</div>
+      <div class="preview">
+        <img src="https://i.scdn.co/image/ab67616d0000b2739b6ac98a52f62d5cb473da40">
+      </div>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
