@@ -1,182 +1,120 @@
 <!DOCTYPE html>
-<html lang="es">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>L韓ea del Tiempo</title>
-<style>
-  body {
-    font-family: Arial, sans-serif;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background: #f0f0f0;
-  }
+  <meta charset="UTF-8">
+  <title>Hydra Sublenguaje</title>
+  <script src="https://unpkg.com/hydra-synth"></script>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      height: 100%;
+      background: black;
+    }
 
-  /* ---- Contenedor externo para scroll ---- */
-  .timeline-wrapper {
-    overflow-x: auto;  /* scroll horizontal */
-    max-width: 90vw;
-    padding: 20px;
-  }
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 0;
+    }
 
-  /* Estilo del scroll */
-  .timeline-wrapper::-webkit-scrollbar {
-    height: 8px;
-  }
-  .timeline-wrapper::-webkit-scrollbar-thumb {
-    background: #aaa;
-    border-radius: 4px;
-  }
-  .timeline-wrapper::-webkit-scrollbar-track {
-    background: #f0f0f0;
-  }
-
-  /* ---- L韓ea del tiempo ---- */
-  .timeline {
-    display: flex;
-    gap: 60px;  /* distancia entre n鷐eros */
-    position: relative;
-  }
-
-  .item {
-    position: relative;
-    cursor: pointer;
-    font-size: 22px;
-    font-weight: bold;
-    color: #333;
-    text-align: center;
-    flex-shrink: 0;       /* no se compriman los items */
-    padding-top: 250px;   /* espacio arriba para la imagen flotante */
-  }
-
-  /* Nombre debajo de la fecha */
-  .item .name {
-    font-size: 16px;
-    color: #555;
-    margin-top: 45px; /* separaci髇 debajo de la fecha */
-    opacity: 0;
-    transition: 0.3s;
-  }
-
-  /* Imagen flotante arriba */
-  .preview {
-    position: absolute;
-    bottom: 120px; /* separaci髇 de la imagen */
-    left: 50%;
-    transform: translateX(-50%);
-    opacity: 0;
-    pointer-events: none;
-    transition: 0.3s;
-    text-align: center;
-  }
-
-  .preview img {
-    width: 180px;
-    border-radius: 10px;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.3);
-  }
-
-  /* Mostrar imagen y nombre al hacer hover */
-  .item:hover .preview {
-    opacity: 1;
-    bottom: 140px;
-  }
-
-  .item:hover .name {
-    opacity: 1;
-  }
-</style>
+    #input {
+      position: fixed;
+      bottom: 20px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 80%;
+      max-width: 600px;
+      height: 80px;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 18px;
+      border: 2px solid white;
+      border-radius: 10px;
+      padding: 10px;
+      z-index: 10;
+      backdrop-filter: blur(4px);
+      resize: none;
+    }
+  </style>
 </head>
 <body>
+  <textarea id="input" placeholder="Escribe: pabaras y letras cortas"></textarea>
+
+  <script>
+    const hydra = new Hydra({ detectAudio: false });
+
+    const palabras = {
+intervenci贸n: () => voronoi(.5).saturate(1.01).scale(.7).color(2.5,2,7).hue(.02).modulateHue(src(o1).hue(.7).posterize(-3).contrast(.5),2).layer(src(o1).mult(gradient(1).saturate(.7))).out(intervenci贸n),
+discurso: () => osc(200, 0).kaleid(200).scale(1, 0.4).scrollX(0.1, 0.01).color(2,3,4).out(),
+tejido: () => osc(10,-0.0018,0.17).diff(osc(10,0.00008).rotate(Math.PI/0.0003)).modulateScale(noise(1.5,0.18).modulateScale(osc(13).rotate(()=>Math.sin(time/22))),3),
+.color(26,0.5,0.4, 0.9, 0.2, 0.011, 5, 22,  15,1).contrast(1.4).add(src(o0).modulate(o0,4),0.6,9).invert().brightness(0.3, 2).contrast( 0.5, 2, 0.1, 2).color(4, 2, 0.1).modulateScale(osc(4),0.2, 2, 1, 0.3).posterize(20) .rotate(1, 0.2, 0.01, 0.001).color(22, 14, 13, 3, 7,  4, 0.2, 8).contrast(0.18, 0.3, 0.1, 0.2, 0.03, 1).brightness(0.0001, -1, 10).out(),
+contacto: () => osc(0.5,1.25).mult(shape(0.07,0.09).rotate(1.5)).diff(gradient()).add(shape(2,2).bend(gradient(2))).modulate(noise().scrollY(0.08,0.05)).color(3,0.5,0.75).out(),
+adaptaci贸n=shape(1,1).mult(voronoi(10000,3).blend(o0).luma()).colorama(13,4,6).add(shape(45,0.125).rotate(4,1).mult(voronoi(1000,5).luma()).rotate(1.5)).scrollX([0.1,0.625,0.5,0.00001],0).scrollY([7,-0.7,0.005,0.0001],0).out(),
+confusi贸n: () => .shape(5,0.2,0.3).color(0.5,4,20).scale(Math.sin(time)+1*2).repeat(Math.sin(time)*5).scale(Math.sin(time)+1*1.5).modulate(noise(2,2)).rotate(1,0.2).invert(4.out(),
+est谩ndar: () => osc(5, 0.01, 0.1).mult(osc(4, 2.7).modulate(osc(7).rotate(4,8), 32)).color(7,3,15).saturate(2.4).luma(13,9, (6, ()=> 1 + a.fft[7])).scale(0.7, ()=> 2.7 + a.fft[2]).diff().out(),
+sustancia: () => osc(20, 0.01, 1.1).kaleid(40).color(38,9.1,3.9).rotate(0, 0.1).modulate(o0, () => mouse.x * 0.0003).scale(1.01).out(),
+intervenci贸n: () =>() => voronoi(.5).saturate(1.01).scale(.7).color(2.5,2,7).hue(.02).modulateHue(src(o1).hue(.7).posterize(-3).contrast(.5),2).layer(src(o1).mult(gradient(1).saturate(.7))).out(intervenci贸n),
+discurso: () => => osc(200, 0).kaleid(200).scale(1, 0.4).scrollX(0.1, 0.01).color(2,3,4).out(),
 
 
 
+magt : () => {
+  osc(40,0.5,() => a.fft[0]*200).out(o2)
+  let shape = osc(60, 0.1, 2)
+    .mult(noise(1, 4))
+    .rotate(() => (Math.random() - 0.5) * 0.5 + Math.sin(time * 0.2) * 0.2)
+  shape.out(o0)
+  return shape
+},
+};
 
-<div class="timeline-wrapper">
-  <div class="timeline">
-    <div class="item">
-      4:44
-      <div class="name">Call Me Little Sunshine</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b2730d532f2d308ee9f58e0ad404">
-      </div>
-    </div>
+    const input = document.getElementById("input");
 
-    <div class="item">
-      2:46
-      <div class="name">DASH</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b27381d97a31253b898bc4149195">
-      </div>
-    </div>
+    input.addEventListener("input", () => {
+      const texto = input.value.toLowerCase().trim();
 
-    <div class="item">
-      3:29
-      <div class="name">Training Season</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b273f5a775e66774883c06aabc70">
-      </div>
-    </div>
+      // Si contiene comas: modulaci贸n encadenada
+      if (texto.includes(",")) {
+        const modWords = texto.split(",").map(w => w.trim()).filter(w => palabras[w]);
+        if (modWords.length >= 2) {
+          let base = palabras[modWords[0]]();
+          for (let i = 1; i < modWords.length; i++) {
+            base = palabras[modWords[i]]().modulate(base, 0.5 + 0.3 * Math.random()); // modulaci贸n aleatoria
+          }
+          base.out();
+          return;
+        }
+      }
 
-    <div class="item">
-      4:41
-      <div class="name">Video Games</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b273ebc8cfac8b586bc475b04918">
-      </div>
-    </div>
+      // Si contiene comas: modulaci贸n encadenada
+      if (texto.includes("x")) {
+        const modWords = texto.split(",").map(w => w.trim()).filter(w => palabras[w]);
+        if (modWords.length >= 2) {
+          let base = palabras[modWords[0]]();
+          for (let i = 1; i < modWords.length; i++) {
+            base = palabras[modWords[i]]().modulateScale(base, 0.5 + 0.3 * Math.random()); // modulaci贸n aleatoria
+          }
+          base.out();
+          return;
+        }
+      }
 
-    <div class="item">
-      2:28
-      <div class="name">SUPERMODEL</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d00001e025bcb1af9a2ccf3474473ed35">
-      </div>
-    </div>
-
-    <div class="item">
-      3:15
-      <div class="name">Im a Mess</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b27361fe6d3a50c0beaa3cfe33e9">
-      </div>
-    </div>
-
-    <div class="item">
-      3:11
-      <div class="name">Kill This Love</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b273e20e5c366b497518353497b0">
-      </div>
-    </div>
-
-    <div class="item">
-      3:06
-      <div class="name">MAMMAMIA</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b273553235260b499fc2df6e4ede">
-      </div>
-    </div>
-
-    <div class="item">
-      3:25
-      <div class="name">IDIOTA</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b273ae9b161eee4e8f69c03d6fab">
-      </div>
-    </div>
-
-    <div class="item">
-      4:05
-      <div class="name">Nervous</div>
-      <div class="preview">
-        <img src="https://i.scdn.co/image/ab67616d0000b2739b6ac98a52f62d5cb473da40">
-      </div>
-    </div>
-  </div>
-</div>
-
+      // Si no hay coma, renderiza todo en capas independientes
+      const entradas = texto.split(/\s+/).map(w => w.trim()).filter(w => palabras[w]);
+      if (entradas.length > 0) {
+        // Componer blend entre todas
+        let comp = palabras[entradas[0]]();
+        for (let i = 1; i < entradas.length; i++) {
+          comp = comp.diff(palabras[entradas[i]](), 0.5);
+        }
+        comp.out();
+      }
+    });
+  </script>
 </body>
 </html>
